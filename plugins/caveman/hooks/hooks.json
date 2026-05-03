@@ -1,0 +1,16 @@
+{
+  "hooks": {
+    "SessionStart": [
+      {
+        "type": "command",
+        "command": "bun ${PLUGIN_ROOT}/scripts/session-start.ts"
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "type": "command",
+        "command": "bun ${PLUGIN_ROOT}/scripts/user-prompt.ts"
+      }
+    ]
+  }
+}

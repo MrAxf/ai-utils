@@ -1,0 +1,8 @@
+{
+  "name": "caveman",
+  "description": "Talk like caveman. Cut ~75% tokens. Keep all technical accuracy.",
+  "version": "1.0.1",
+  "author": {
+    "name": "Axford"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "axford-ai-utils",
+  "owner": {
+    "name": "Axford"
+  },
+  "metadata": {
+    "pluginRoot": "./plugins"
+  },
+  "plugins": [
+    {
+      "name": "caveman",
+      "source": "./caveman/",
+      "description": "Talk like caveman. Cut ~75% tokens. Keep all technical accuracy.",
+      "version": "1.0.0"
+    }
+  ]
+}
