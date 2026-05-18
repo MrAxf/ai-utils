@@ -1,4 +1,4 @@
-import { type CavemanMode, getConfigPath, readOrCreateConfig, writeConfig } from "./helpers";
+import { getConfigPath, readOrCreateConfig, writeConfig } from "./helpers";
 
 let input = '';
 process.stdin.on('data', chunk => { input += chunk; });
@@ -13,9 +13,7 @@ process.stdin.on('end', () => {
         hookEventName: "UserPromptSubmit",
         additionalContext: `
           Help command:
-          - /caveman lite|full|ultra: Set caveman mode for this session
-          - /caveman off: Disable caveman for this session
-          - /caveman set-mode <mode>: Persist default mode (off|lite|full|ultra) to config file
+          - /caveman on|off Enable or disable caveman.
           - /caveman help: Show this message
          `
       }
@@ -24,30 +22,18 @@ process.stdin.on('end', () => {
   }
 
   // /caveman <mode>
-  const setModeMatch = prompt.match(/^\/caveman\s+(off|lite|full|ultra)$/i);
+  const setModeMatch = prompt.match(/^\/caveman\s+(on|off)$/i);
   if (setModeMatch) {
-    const mode = setModeMatch[1]!.toLowerCase() as CavemanMode;
-    process.stdout.write(JSON.stringify({
-      hookSpecificOutput: {
-        hookEventName: "UserPromptSubmit",
-        additionalContext: "CAVEMAN MODE ACTIVE (" + mode + "). "
-      }
-    }));
-    process.exit(0);
-  }
+    const mode = setModeMatch[1]!.toLowerCase();
 
-  // /caveman set-mode <mode>
-  const setDefaultMatch = prompt.match(/^\/caveman\s+set-mode\s+(off|lite|full|ultra)$/i);
-  if (setDefaultMatch) {
-    const mode = setDefaultMatch[1]!.toLowerCase() as CavemanMode;
     const configPath = getConfigPath();
     const config = readOrCreateConfig(configPath);
-    config.caveman = { ...config.caveman, mode };
+    config.caveman = mode === "on";
     writeConfig(configPath, config);
     process.stdout.write(JSON.stringify({
       hookSpecificOutput: {
         hookEventName: "UserPromptSubmit",
-        additionalContext: "CAVEMAN DEFAULT MODE SET TO " + mode + ". DO NOT CHANGE IN THIS SESSION. "
+        additionalContext: "CAVEMAN " + (mode === "on" ? "ENABLED" : "DISABLED") + "."
       }
     }));
     process.exit(0);

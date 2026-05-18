@@ -1,16 +1,12 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 
-export type CavemanMode = "off" | "lite" | "full" | "ultra";
-
 export interface Config {
-  caveman: {
-    mode: CavemanMode;
-  };
+  caveman: boolean;
 }
 
 export const DEFAULT_CONFIG: Config = {
-  caveman: { mode: "full" },
+  caveman: true,
 };
 
 export function getConfigPath(): string {
